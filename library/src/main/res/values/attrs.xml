@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="XStateController">
+        <attr name="x_contentLayoutId" format="reference" />
+        <attr name="x_loadingLayoutId" format="reference" />
+        <attr name="x_emptyLayoutId" format="reference" />
+        <attr name="x_errorLayoutId" format="reference" />
+    </declare-styleable>
+</resources>

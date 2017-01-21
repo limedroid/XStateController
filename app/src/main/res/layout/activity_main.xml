@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/bt_showLoading"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#ff665d"
+            android:text="showLoading"
+            android:textColor="@android:color/white" />
+
+
+        <Button
+            android:id="@+id/bt_showError"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#67665d"
+            android:text="showError"
+            android:textColor="@android:color/white" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/bt_showEmpty"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#ab7865"
+            android:text="showEmpty"
+            android:textColor="@android:color/white" />
+
+
+        <Button
+            android:id="@+id/bt_showContent"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#854678"
+            android:text="showContent"
+            android:textColor="@android:color/white" />
+
+    </LinearLayout>
+
+
+    <cn.droidlover.xstatecontroller.XStateController
+        android:id="@+id/controller"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:x_emptyLayoutId="@layout/view_empty">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#854678"
+            android:gravity="center"
+            android:text="Content"
+            android:textColor="@android:color/white"
+            android:textSize="28sp" />
+
+    </cn.droidlover.xstatecontroller.XStateController>
+
+
+</LinearLayout>
