@@ -60,8 +60,8 @@ public class XStateController extends FrameLayout {
         super.onFinishInflate();
 
         int childCount = getChildCount();
-        if (childCount > 4) {
-            throw new IllegalStateException("XStateController can only host 4 elements");
+        if (childCount > 1) {
+            throw new IllegalStateException("XStateController can only host 1 elements");
         } else {
             if (loadingLayoutId != RES_NONE) {
                 loadingView = inflate(getContext(), loadingLayoutId, null);
@@ -86,7 +86,7 @@ public class XStateController extends FrameLayout {
                 }
             }
             if (contentView == null) {
-                throw new IllegalStateException("XStateController can not be null");
+                throw new IllegalStateException("contentView can not be null");
             }
 
             for (int index = 0; index < getChildCount(); index++) {
@@ -126,24 +126,26 @@ public class XStateController extends FrameLayout {
         }
     }
 
-    private View getDisplayView() {
-        if (displayState == STATE_LOADING) return loadingView;
-        if (displayState == STATE_ERROR) return errorView;
-        if (displayState == STATE_EMPTY) return emptyView;
+    private View getDisplayView(int oldState) {
+        if (oldState == STATE_LOADING) return loadingView;
+        if (oldState == STATE_ERROR) return errorView;
+        if (oldState == STATE_EMPTY) return emptyView;
         return contentView;
     }
 
 
     private void notifyStateChange(int oldState, int newState, View enterView) {
         if (enterView != null) {
+
+            displayState = newState;
+
             if (oldState != -1) {
                 getStateChangeListener().onStateChange(oldState, newState);
-                getStateChangeListener().animationState(getDisplayView(), enterView);
+                getStateChangeListener().animationState(getDisplayView(oldState), enterView);
             } else {
                 enterView.setVisibility(VISIBLE);
                 enterView.setAlpha(1);
             }
-            displayState = newState;
         }
     }
 
@@ -309,7 +311,7 @@ public class XStateController extends FrameLayout {
         @Override
         public void animationState(final View exitView, final View enterView) {
             AnimatorSet set = new AnimatorSet();
-            ObjectAnimator enter = ObjectAnimator.ofFloat(enterView, View.ALPHA, 1f);
+            final ObjectAnimator enter = ObjectAnimator.ofFloat(enterView, View.ALPHA, 1f);
             ObjectAnimator exit = ObjectAnimator.ofFloat(exitView, View.ALPHA, 0f);
             set.playTogether(enter, exit);
             set.setDuration(300);
@@ -321,21 +323,35 @@ public class XStateController extends FrameLayout {
 
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    exitView.setVisibility(GONE);
                     exitView.setAlpha(1);
+                    exitView.setVisibility(GONE);
+                    checkView(enterView);
                 }
 
                 @Override
                 public void onAnimationCancel(Animator animation) {
-
                 }
 
                 @Override
                 public void onAnimationRepeat(Animator animation) {
-
                 }
             });
             set.start();
+        }
+
+        private void checkView(View enterView) {
+            int visibleChild = 0;
+            FrameLayout parent = (FrameLayout) enterView.getParent();
+            int childCount = parent.getChildCount();
+            for (int index = 0; index < childCount; index++) {
+                if (parent.getChildAt(index).getVisibility() == VISIBLE) {
+                    visibleChild++;
+                }
+            }
+            if (visibleChild < 1) {
+                enterView.setVisibility(VISIBLE);
+                enterView.setAlpha(1);
+            }
         }
     }
 }
