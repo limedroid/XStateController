@@ -65,14 +65,22 @@
         android:layout_height="match_parent"
         app:x_emptyLayoutId="@layout/view_empty">
 
-        <TextView
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipeLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#854678"
-            android:gravity="center"
-            android:text="Content"
-            android:textColor="@android:color/white"
-            android:textSize="28sp" />
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#854678"
+                android:gravity="center"
+                android:text="Content"
+                android:textColor="@android:color/white"
+                android:textSize="28sp" />
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
 
     </cn.droidlover.xstatecontroller.XStateController>
 
